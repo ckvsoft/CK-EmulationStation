@@ -1,5 +1,6 @@
 #include "guis/GuiMetaDataEd.h"
 #include "Renderer.h"
+#include "Locale.h"
 #include "Log.h"
 #include "components/AsyncReqComponent.h"
 #include "Settings.h"
@@ -31,7 +32,7 @@ GuiMetaDataEd::GuiMetaDataEd(Window* window, MetaDataList* md, const std::vector
 
 	mHeaderGrid = std::make_shared<ComponentGrid>(mWindow, Vector2i(1, 5));
 	
-	mTitle = std::make_shared<TextComponent>(mWindow, "EDIT METADATA", Font::get(FONT_SIZE_LARGE), 0x555555FF, ALIGN_CENTER);
+    mTitle = std::make_shared<TextComponent>(mWindow, _("EDIT METADATA"), Font::get(FONT_SIZE_LARGE), 0x555555FF, ALIGN_CENTER);
 	mSubtitle = std::make_shared<TextComponent>(mWindow, strToUpper(scraperParams.game->getPath().filename().generic_string()), 
 		Font::get(FONT_SIZE_SMALL), 0x777777FF, ALIGN_CENTER);
 	mHeaderGrid->setEntry(mTitle, Vector2i(0, 1), false, true);
@@ -130,16 +131,16 @@ GuiMetaDataEd::GuiMetaDataEd(Window* window, MetaDataList* md, const std::vector
 	std::vector< std::shared_ptr<ButtonComponent> > buttons;
 
 	if(!scraperParams.system->hasPlatformId(PlatformIds::PLATFORM_IGNORE))
-		buttons.push_back(std::make_shared<ButtonComponent>(mWindow, "SCRAPE", "scrape", std::bind(&GuiMetaDataEd::fetch, this)));
+        buttons.push_back(std::make_shared<ButtonComponent>(mWindow, _("SCRAPE"), "scrape", std::bind(&GuiMetaDataEd::fetch, this)));
 
-	buttons.push_back(std::make_shared<ButtonComponent>(mWindow, "SAVE", "save", [&] { save(); delete this; }));
-	buttons.push_back(std::make_shared<ButtonComponent>(mWindow, "CANCEL", "cancel", [&] { delete this; }));
+    buttons.push_back(std::make_shared<ButtonComponent>(mWindow, _("SAVE"), "save", [&] { save(); delete this; }));
+    buttons.push_back(std::make_shared<ButtonComponent>(mWindow, _("CANCEL"), "cancel", [&] { delete this; }));
 
 	if(mDeleteFunc)
 	{
 		auto deleteFileAndSelf = [&] { mDeleteFunc(); delete this; };
-		auto deleteBtnFunc = [this, deleteFileAndSelf] { mWindow->pushGui(new GuiMsgBox(mWindow, "THIS WILL DELETE A FILE!\nARE YOU SURE?", "YES", deleteFileAndSelf, "NO", nullptr)); };
-		buttons.push_back(std::make_shared<ButtonComponent>(mWindow, "DELETE", "delete", deleteBtnFunc));
+        auto deleteBtnFunc = [this, deleteFileAndSelf] { mWindow->pushGui(new GuiMsgBox(mWindow, _("THIS WILL DELETE A FILE!\nARE YOU SURE?"), _("YES"), deleteFileAndSelf, _("NO"), nullptr)); };
+        buttons.push_back(std::make_shared<ButtonComponent>(mWindow, _("DELETE"), "delete", deleteBtnFunc));
 	}
 
 	mButtons = makeButtonGrid(mWindow, buttons);
@@ -231,9 +232,9 @@ void GuiMetaDataEd::close(bool closeAllWindows)
 	{
 		// changes were made, ask if the user wants to save them
 		mWindow->pushGui(new GuiMsgBox(mWindow, 
-			"SAVE CHANGES?",
-			"YES", [this, closeFunc] { save(); closeFunc(); },
-			"NO", closeFunc
+            _("SAVE CHANGES?"),
+            _("YES"), [this, closeFunc] { save(); closeFunc(); },
+            _("NO"), closeFunc
 		));
 	}else{
 		closeFunc();
@@ -258,7 +259,7 @@ bool GuiMetaDataEd::input(InputConfig* config, Input input)
 std::vector<HelpPrompt> GuiMetaDataEd::getHelpPrompts()
 {
 	std::vector<HelpPrompt> prompts = mGrid.getHelpPrompts();
-	prompts.push_back(HelpPrompt("b", "back"));
-	prompts.push_back(HelpPrompt("start", "close"));
+    prompts.push_back(HelpPrompt("b", _("BACK")));
+    prompts.push_back(HelpPrompt("start", _("CLOSE")));
 	return prompts;
 }

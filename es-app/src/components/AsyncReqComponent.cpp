@@ -1,5 +1,6 @@
 #include "components/AsyncReqComponent.h"
 #include "Renderer.h"
+#include "Locale.h"
 
 AsyncReqComponent::AsyncReqComponent(Window* window, std::shared_ptr<HttpReq> req, std::function<void(std::shared_ptr<HttpReq>)> onSuccess, std::function<void()> onCancel) 
 	: GuiComponent(window), 
@@ -10,7 +11,7 @@ AsyncReqComponent::AsyncReqComponent(Window* window, std::shared_ptr<HttpReq> re
 
 bool AsyncReqComponent::input(InputConfig* config, Input input)
 {
-	if(input.value != 0 && config->isMappedTo("b", input))
+    if(input.value != 0 && config->isMappedTo("b", input))
 	{
 		if(mCancelFunc)
 			mCancelFunc();
@@ -46,6 +47,6 @@ void AsyncReqComponent::render(const Eigen::Affine3f& parentTrans)
 std::vector<HelpPrompt> AsyncReqComponent::getHelpPrompts()
 {
 	std::vector<HelpPrompt> prompts;
-	prompts.push_back(HelpPrompt("b", "cancel"));
+    prompts.push_back(HelpPrompt("b", _("CANCEL")));
 	return prompts;
 }

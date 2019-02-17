@@ -2,6 +2,7 @@
 #include "Renderer.h"
 #include "resources/Font.h"
 #include "Window.h"
+#include "Locale.h"
 
 SwitchComponent::SwitchComponent(Window* window, bool state) : GuiComponent(window), mImage(window), mState(state)
 {
@@ -55,6 +56,6 @@ void SwitchComponent::onStateChanged()
 std::vector<HelpPrompt> SwitchComponent::getHelpPrompts()
 {
 	std::vector<HelpPrompt> prompts;
-	prompts.push_back(HelpPrompt("a", "change"));
+    prompts.push_back(HelpPrompt("a", _("CHANGE")));
 	return prompts;
 }

@@ -1,6 +1,7 @@
 #include "views/SystemView.h"
 #include "SystemData.h"
 #include "Renderer.h"
+#include "Locale.h"
 #include "Log.h"
 #include "Window.h"
 #include "views/ViewController.h"
@@ -14,7 +15,7 @@
 #define BAND_HEIGHT (logoSize().y() * SELECTED_SCALE)
 
 SystemView::SystemView(Window* window) : IList<SystemViewData, SystemData*>(window, LIST_SCROLL_STYLE_SLOW, LIST_ALWAYS_LOOP),
-	mSystemInfo(window, "SYSTEM INFO", Font::get(FONT_SIZE_SMALL), 0x33333300, ALIGN_CENTER)
+    mSystemInfo(window, _("SYSTEM INFO"), Font::get(FONT_SIZE_SMALL), 0x33333300, ALIGN_CENTER)
 {
 	mCamOffset = 0;
 	mExtrasCamOffset = 0;
@@ -332,8 +333,8 @@ void SystemView::render(const Eigen::Affine3f& parentTrans)
 std::vector<HelpPrompt> SystemView::getHelpPrompts()
 {
 	std::vector<HelpPrompt> prompts;
-	prompts.push_back(HelpPrompt("left/right", "choose"));
-	prompts.push_back(HelpPrompt("a", "select"));
+    prompts.push_back(HelpPrompt("left/right", _("CHOOSE")));
+    prompts.push_back(HelpPrompt("a", _("SELECT")));
 	return prompts;
 }
 

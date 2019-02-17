@@ -2,6 +2,7 @@
 #include <assert.h>
 #include "Renderer.h"
 #include "resources/Font.h"
+#include "Locale.h"
 #include "Log.h"
 #include "Util.h"
 
@@ -140,6 +141,6 @@ void SliderComponent::onValueChanged()
 std::vector<HelpPrompt> SliderComponent::getHelpPrompts()
 {
 	std::vector<HelpPrompt> prompts;
-	prompts.push_back(HelpPrompt("left/right", "change"));
+    prompts.push_back(HelpPrompt("left/right", _("CHANGE")));
 	return prompts;
 }

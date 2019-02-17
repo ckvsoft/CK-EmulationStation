@@ -2,6 +2,7 @@
 #include <iostream>
 #include <boost/filesystem.hpp>
 #include <math.h>
+#include "Locale.h"
 #include "Log.h"
 #include "Renderer.h"
 #include "ThemeData.h"
@@ -326,6 +327,6 @@ void ImageComponent::applyTheme(const std::shared_ptr<ThemeData>& theme, const s
 std::vector<HelpPrompt> ImageComponent::getHelpPrompts()
 {
 	std::vector<HelpPrompt> ret;
-	ret.push_back(HelpPrompt("a", "select"));
+    ret.push_back(HelpPrompt("a", _("SELECT")));
 	return ret;
 }

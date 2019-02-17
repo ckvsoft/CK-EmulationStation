@@ -1,4 +1,5 @@
 #include "views/ViewController.h"
+#include "Locale.h"
 #include "Log.h"
 #include "SystemData.h"
 #include "Settings.h"
@@ -266,6 +267,17 @@ bool ViewController::input(InputConfig* config, Input input)
 		return true;
 	}
 
+    if(config->isMappedTo("select", input) && input.value != 0)
+    {
+        mWindow->pushGui(new GuiMsgBox(mWindow, _("REALLY QUIT?"), _("YES"),
+                                       [] {
+            SDL_Event ev;
+            ev.type = SDL_QUIT;
+            SDL_PushEvent(&ev);
+        }, _("NO"), nullptr));
+        return true;
+    }
+
 	if(mCurrentView)
 		return mCurrentView->input(config, input);
 
@@ -389,7 +401,8 @@ std::vector<HelpPrompt> ViewController::getHelpPrompts()
 		return prompts;
 	
 	prompts = mCurrentView->getHelpPrompts();
-	prompts.push_back(HelpPrompt("start", "menu"));
+    prompts.push_back(HelpPrompt("select", _("QUIT")));
+    prompts.push_back(HelpPrompt("start", _("MENU")));
 
 	return prompts;
 }

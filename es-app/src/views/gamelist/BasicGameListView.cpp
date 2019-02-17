@@ -5,6 +5,7 @@
 #include "ThemeData.h"
 #include "SystemData.h"
 #include "Settings.h"
+#include "Locale.h"
 
 BasicGameListView::BasicGameListView(Window* window, FileData* root)
 	: ISimpleGameListView(window, root), mList(window)
@@ -91,10 +92,10 @@ std::vector<HelpPrompt> BasicGameListView::getHelpPrompts()
 	std::vector<HelpPrompt> prompts;
 
 	if(Settings::getInstance()->getBool("QuickSystemSelect"))
-		prompts.push_back(HelpPrompt("left/right", "system"));
-	prompts.push_back(HelpPrompt("up/down", "choose"));
-	prompts.push_back(HelpPrompt("a", "launch"));
-	prompts.push_back(HelpPrompt("b", "back"));
-	prompts.push_back(HelpPrompt("select", "options"));
+        prompts.push_back(HelpPrompt("left/right", _("SYSTEM")));
+    prompts.push_back(HelpPrompt("up/down", _("CHOOSE")));
+    prompts.push_back(HelpPrompt("a", _("LAUNCH")));
+    prompts.push_back(HelpPrompt("b", _("BACK")));
+    prompts.push_back(HelpPrompt("select", _("OPTIONS")));
 	return prompts;
 }
